@@ -1447,13 +1447,6 @@ nav a {
 a[href="/archive"] {
     color: #007ACC !important;  /* 替换成柔和蓝色 */
     font-size: 18px;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 8px;
-    background-color: #F0F8FF;  /* 轻微背景色 */
-    border: 2px solid #007ACC;
-    display: inline-block;
-    text-align: center;
 }
 
 a[href="/archive"]:hover {
@@ -1466,13 +1459,6 @@ a[href="/archive"]:hover {
 a[href="/tags"] {
     color: #007ACC !important;  /* 替换成柔和蓝色 */
     font-size: 18px;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 8px;
-    background-color: #F0F8FF;  /* 轻微背景色 */
-    border: 2px solid #007ACC;
-    display: inline-block;
-    text-align: center;
 }
 
 a[href="/tags"]:hover {
@@ -1484,13 +1470,6 @@ a[href="/tags"]:hover {
 a[href="/support"] {
     color: #007ACC !important;  /* 替换成柔和蓝色 */
     font-size: 18px;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 8px;
-    background-color: #F0F8FF;  /* 轻微背景色 */
-    border: 2px solid #007ACC;
-    display: inline-block;
-    text-align: center;
 }
 
 a[href="/support"]:hover {
@@ -1502,13 +1481,6 @@ a[href="/support"]:hover {
 a[href="/about"] {
     color: #007ACC !important;  /* 替换成柔和蓝色 */
     font-size: 18px;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 8px;
-    background-color: #F0F8FF;  /* 轻微背景色 */
-    border: 2px solid #007ACC;
-    display: inline-block;
-    text-align: center;
 }
 
 a[href="/about"]:hover {
