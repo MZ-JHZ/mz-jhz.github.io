@@ -1445,5 +1445,25 @@ nav a {
 
 /* 添加 Articles 颜色修改 */
 a[href="/archive"] {
-    color: red !important;
+  color: #007ACC !important;  /* 颜色更柔和 */
+  font-size: 18px;  /* 让字体更大 */
+  font-weight: bold;  /* 加粗 */
+}
+
+a[href="/tags"] {
+  color: #007ACC !important;  /* 颜色更柔和 */
+  font-size: 18px;  /* 让字体更大 */
+  font-weight: bold;  /* 加粗 */
+}
+
+a[href="/support"] {
+  color: #007ACC !important;  /* 颜色更柔和 */
+  font-size: 18px;  /* 让字体更大 */
+  font-weight: bold;  /* 加粗 */
+}
+
+a[href="/about"] {
+  color: #007ACC !important;  /* 颜色更柔和 */
+  font-size: 18px;  /* 让字体更大 */
+  font-weight: bold;  /* 加粗 */
 }
