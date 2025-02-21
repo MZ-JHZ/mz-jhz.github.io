@@ -1445,25 +1445,74 @@ nav a {
 
 /* 添加 Articles 颜色修改 */
 a[href="/archive"] {
-  color: #007ACC !important;  /* 颜色更柔和 */
-  font-size: 18px;  /* 让字体更大 */
-  font-weight: bold;  /* 加粗 */
+    color: #007ACC !important;  /* 替换成柔和蓝色 */
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #F0F8FF;  /* 轻微背景色 */
+    border: 2px solid #007ACC;
+    display: inline-block;
+    text-align: center;
 }
 
+a[href="/archive"]:hover {
+    background-color: #007ACC;
+    color: white !important;
+    border: 2px solid #005F8A;
+}
+
+
 a[href="/tags"] {
-  color: #007ACC !important;  /* 颜色更柔和 */
-  font-size: 18px;  /* 让字体更大 */
-  font-weight: bold;  /* 加粗 */
+    color: #007ACC !important;  /* 替换成柔和蓝色 */
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #F0F8FF;  /* 轻微背景色 */
+    border: 2px solid #007ACC;
+    display: inline-block;
+    text-align: center;
+}
+
+a[href="/tags"]:hover {
+    background-color: #007ACC;
+    color: white !important;
+    border: 2px solid #005F8A;
 }
 
 a[href="/support"] {
-  color: #007ACC !important;  /* 颜色更柔和 */
-  font-size: 18px;  /* 让字体更大 */
-  font-weight: bold;  /* 加粗 */
+    color: #007ACC !important;  /* 替换成柔和蓝色 */
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #F0F8FF;  /* 轻微背景色 */
+    border: 2px solid #007ACC;
+    display: inline-block;
+    text-align: center;
+}
+
+a[href="/support"]:hover {
+    background-color: #007ACC;
+    color: white !important;
+    border: 2px solid #005F8A;
 }
 
 a[href="/about"] {
-  color: #007ACC !important;  /* 颜色更柔和 */
-  font-size: 18px;  /* 让字体更大 */
-  font-weight: bold;  /* 加粗 */
+    color: #007ACC !important;  /* 替换成柔和蓝色 */
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #F0F8FF;  /* 轻微背景色 */
+    border: 2px solid #007ACC;
+    display: inline-block;
+    text-align: center;
+}
+
+a[href="/about"]:hover {
+    background-color: #007ACC;
+    color: white !important;
+    border: 2px solid #005F8A;
 }
