@@ -1,3 +1,10 @@
+---
+layout: post
+title: What is Transformer
+description: What is Transformer
+tag: ML
+---
+
 # What is Transformer
 
 The Transformer model is a deep learning model based on the **self-attention mechanism**. It is specifically designed for **natural language processing (NLP) tasks**, excelling at sequence-to-sequence tasks such as **machine translation, text generation, and summarization**.
@@ -65,7 +72,7 @@ class PositionalEncoding(nn.Module):
         self.encoding.requires_grad = False
         pos = torch.arange(0, max_len).float().unsqueeze(dim=1)
         _2i = torch.arange(0, d_model, step=2).float()
-        
+
         self.encoding[:, 0::2] = torch.sin(pos / (10000 ** (_2i / d_model)))
         self.encoding[:, 1::2] = torch.cos(pos / (10000 ** (_2i / d_model)))
 
@@ -84,7 +91,7 @@ For each word in the input sequence, corresponding Query, Key, and Value vectors
 
 The input XX is mapped to the **query matrix** Q, **key matrix** K, and **value matrix** VV through linear transformations:
 
-Q = X * W_Q,  K = X * W_K, V = X * W_V 
+Q = X * W_Q,  K = X * W_K, V = X * W_V
 
 where  \(W_Q\)、\(W_K\) 和 \(W_V\) are trainable weight matrices.
 
@@ -112,7 +119,7 @@ Attention（Q,K,V） = Attention Weight * V
 
 Before implementing the code, it's important to understand the linear layer. **`nn.Linear`** is a **fully connected layer (linear layer)** module provided by PyTorch, implementing the following linear transformation internally:
 
-output=X*W^T + b 
+output=X*W^T + b
 
 where XX is the input tensor, WW is a trainable weight matrix, and bb is a trainable bias vector.
 
@@ -137,17 +144,17 @@ class MultiHeadAttention(nn.Module):
         self.w_v = nn.Linear(d_model, d_model)
         self.w_combination = nn.Linear(d_model, d_model)
         self.softmax = nn.Softmax(dim=-1)
-        
+
     def forward(self, q, k, v, mask=None):
         batch, seq_len, _ = q.shape
         q = self.w_q(q).view(batch, seq_len, self.n_head, self.n_d).permute(0, 2, 1, 3)
         k = self.w_k(k).view(batch, seq_len, self.n_head, self.n_d).permute(0, 2, 1, 3)
         v = self.w_v(v).view(batch, seq_len, self.n_head, self.n_d).permute(0, 2, 1, 3)
         score = torch.matmul(q, k.transpose(-2, -1)) / math.sqrt(self.n_d)
-        
+
         if mask is not None:
             score = score.masked_fill(mask == 0, float('-inf'))
-        
+
         attention_weights = self.softmax(score)
         attention_output = torch.matmul(attention_weights, v)
         attention_output = attention_output.permute(0, 2, 1, 3).contiguous().view(batch, seq_len, self.d_model)
@@ -194,7 +201,7 @@ class FFN(nn.Module):
         self.fc1 = nn.Linear(d_model, hidden_dim)
         self.relu = nn.ReLU()
         self.fc2 = nn.Linear(hidden_dim, d_model)
-    
+
     def forward(self, x):
         return self.fc2(self.relu(self.fc1(x)))
 ```
@@ -216,7 +223,7 @@ import torch.nn as nn
 batch_size = 2
 seq_len = 4
 d_model = 8
-vocab_size = 10 
+vocab_size = 10
 tokens = torch.randint(0, vocab_size, (batch_size, seq_len))
 print(tokens.shape)  # (2, 4)
 embedding_layer = nn.Embedding(vocab_size, d_model)  
@@ -260,7 +267,7 @@ w_v = torch.nn.Linear(d_model, d_model)
 
 q = w_q(x)  
 k = w_k(x)  
-v = w_v(x) 
+v = w_v(x)
 print("Q, K, V:", q.shape)  # (batch_size, seq_len, d_model) -> (2,4,8)
 ```
 
@@ -327,4 +334,3 @@ print("FFN Output:", ffn_output.shape) # ffn_output = (2,4,8)
 x = layer_norm(ffn_output + x)
 print("Final Encoder Output:", x.shape) # x = (2,4,8)
 ```
-
