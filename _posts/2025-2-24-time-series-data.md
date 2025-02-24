@@ -1,3 +1,10 @@
+---
+layout: post
+title: What is time series data
+description: What is time series data
+tag: Data
+---
+
 # Time series data
 
  Understanding the dataset is really important before we start analyzing
