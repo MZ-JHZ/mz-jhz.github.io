@@ -7,131 +7,123 @@ tag: Data
 
 ## Understanding the dataset is really important before we start analyzing
 
-### 1) Read Data
-When processing time series data, I first use `index_col` and `parse_date` while reading the data. I convert the date column into `datetime` format and set it as the index, which facilitates time-based analysis.
+### Read Data
+When I process time series data, I first use `index_col` and `parse_date` in the process of reading the data. I convert the date column data into datetime format and set the date column as my index. This is conducive to the subsequent time-based analysis of the time series data.
 
-![1](/assets/Pasted%20image%2020250224115140.png)
+![1](/assets/Pasted image 20250224115140.png)
 
-### 2) Cleaning Data
-1. If there are missing values, we can use methods like `fillna()` to fill them. The `fill` parameter allows us to use the latest observed value for missing entries.
-2. To identify missing values:
-   - `time_series_data.isnull().any()`: Identifies columns with missing values.
-   - `time_series_data.isnull().sum()`: Counts missing values per column.
+### Cleaning Data
+1. If there are any missing values, then we need to use methods like `fillna()` to fill them out. We may need to use the `fill` parameter to let the computer know we want to use the latest observed value to fill the missing value.
+2. To find out where the missing values are:
+   - `time_series_data.isnull().any()`: It will tell you which column has missing values.
+   - `time_series_data.isnull().sum()`: It will show the number of missing values in each column.
 
-### 3) Visualization
-Generating a graph for each column:
+### Visualization
+It will give you the graph of each column.
 
-![2](/assets/Pasted%20image%2020250224115154.png)
+![2](/assets/Pasted image 20250224115154.png)
 
-### 4) Shifts (Method in Time Series Data)
-Shifting allows comparison of current data with its past values using `datetimeindex`.
+### Shifts (Method in Time Series Data)
+One thing that is really important in time series data is shifting. We can use different `datetimeindex` to shift the index to get a new period of that time series data. Therefore, we can compare the current data to its past.
 
-![3](/assets/Pasted%20image%2020250224115600.png)
+![3](/assets/Pasted image 20250224115600.png)
 
-### 5) Comparing Two Different Time Series Data
-When comparing two time series attributes:
-- Differences in scale can cause issues in visualization, correlation, machine learning, and distance metrics.
-- Solutions include:
-  1. **Min-Max Scaling**:
-     $$ X' = \frac{X - X_{\min}}{X_{\max} - X_{\min}} $$
-  2. **Z-score Normalization**:
-     $$ X' = \frac{X - \mu}{\sigma} $$
-  3. **First Point Z-score**:
-     $$ X' = \frac{X}{X_0} $$
+### Comparing Two Different Time Series Data
+Whether we are comparing two time series attributes in one dataset or two dependent variables that are both time series data, we need to consider the problem of dimension. If the first data range is from 100 to 500 and the second one is from 10 to 50, different dimensions will cause several problems:
+1. Visualization
+2. Correlation
+3. Machine Learning
+4. Distance Metrics
 
-We generally use the last method for time series analysis.
+To solve these problems, we normally have three methods:
+- **Min-Max Scaling**:
+  \[
+  X' = \frac{X - X_{\min}}{X_{\max} - X_{\min}}
+  \]
+- **Z-score Normalization**:
+  \[
+  X' = \frac{X - \mu}{\sigma}
+  \]
+- **First Point Normalization**:
+  \[
+  X' = \frac{X}{X_0}
+  \]
 
-### 6) Rolling Windows
-A rolling window technique calculates the mean, standard deviation, or trend over a fixed period (e.g., 90 days), smoothing fluctuations.
+We tend to use the last method for time series data.
 
-![4](/assets/Pasted%20image%2020250224122300.png)
+### Rolling Windows (Method in Time Series Data)
+Windows is a technique used to process time series data. It allows us to calculate the mean, standard value, and trend within a certain period. In this case, the window size is fixed at 90 days.
 
-### 7) Expanding Windows
-Unlike rolling windows, expanding windows include all past data points as the window grows over time.
+![4](/assets/Pasted image 20250224122300.png)
 
-![5](/assets/Pasted%20image%2020250224122821.png)
+Using rolling windows can help smooth time series data, extract trends, and reduce the impact of short-term fluctuations.
 
-## ARMA & ARIMA Models
+### Expanding Windows (Method in Time Series Data)
+The difference between expanding windows and rolling windows is that rolling windows have a fixed size, whereas expanding windows grow indefinitely until they contain all data points.
 
-### 8) ARMA & ARIMA
-- **Financial data is typically time series data**, evolving as time progresses.
-- A random walk model: $$ P_t = P_{t-1} + \sigma_t $$
-- Financial data often has a mean value, leading to:
-  $$ P_t = P_{t-1} + u + \sigma_t $$
+![5](/assets/Pasted image 20250224122821.png)
 
-#### How to Represent Financial Data Using Equations
-If a time series can be represented as:
-  $$ P_t = \beta P_{t-1} + u + \sigma_t $$
-  - If \( \beta = 1 \), the series is **not stable** (variance increases over time).
-  - **Stability check**: If the series is unstable, we apply **differencing**.
+### ARMA & ARIMA (Model)
+#### Financial Time Series and Random Walk
+Most financial data are time series data since they evolve over time. The random walk equation is:
+\[
+P_t = P_{t-1} + \sigma_t
+\]
+Random walks cannot be used for prediction since their noise is entirely random. Most financial data have a mean value, leading to the equation:
+\[
+P_t = P_{t-1} + u + \sigma_t
+\]
 
-#### Stability in Time Series Data
-- **Definition**: A stable time series maintains its properties over time.
-- **Tests for stability**:
-  1. **Visualization**:
-     - Stable time series should have **constant mean and variance**.
-     - Trends or volatility indicate instability.
-  2. **ACF (Autocorrelation Function)**:
-     - Measures correlation with lagged values.
-     - If ACF **cuts off** at a certain lag, the data **may be stationary**.
-  3. **PACF (Partial Autocorrelation Function)**:
-     - Helps in identifying AR processes.
-  4. **Augmented Dickey-Fuller (ADF) Test**:
-     - \( H_0 \): Time series is unstable.
-     - \( H_a \): Time series is stable.
-     - If p-value > 0.05, we **cannot reject** \( H_0 \) (i.e., the series is unstable).
+#### Testing for Stationarity
+Before analyzing data, we need to check whether the time series is stable. If it is not, we use **Differencing**.
 
-If unstable, apply **ARIMA**:
-- Differencing
-- Trend, seasonality, and cyclicality removal:
-  $$ Z_t = T_t + S_t + X_t $$
-- Log transformation
+A stable time series satisfies:
+1. Mean does not change over time.
+2. Variance does not change over time.
+3. The absence of trending or volatile behavior.
 
-### 9) White Noise
-- Before modeling, check if the residuals are **white noise**.
-- **White noise properties**:
-  - ACF has a peak only at lag 0.
-  - Values are independent.
-- **Tests**:
-  - **Box-Pierce Test** (or Ljung-Box Test for better accuracy).
+Tests for stationarity:
+- **Autocorrelation Function (ACF):** Measures correlation with lagged values.
+- **Partial Autocorrelation Function (PACF):** Helps in identifying AR processes.
+- **Augmented Dickey-Fuller (ADF) Test:**
+  - Null Hypothesis (H₀): Time series is unstable.
+  - Alternative Hypothesis (H₁): Time series is stable.
+  - If p-value > 0.05, we cannot reject H₀ (unstable series).
 
-### 10) ARMA Model (Requires Stable Data)
-- **ARMA consists of two parts:**
-  - **AR (AutoRegressive model):**
-    $$ R_t = u + \beta R_{t-1} + \epsilon_t $$
-  - **MA (Moving Average model):**
-    $$ R_t = u + \theta \epsilon_{t-1} + \epsilon_t $$
-  - **Combining AR and MA**:
-    $$ R_t = u + \beta R_{t-1} + \theta \epsilon_{t-1} + \epsilon_t $$
+#### ARMA Model (Requires Stationary Data)
+- **AR (AutoRegressive Model):**
+  \[
+  R_t = u + \beta R_{t-1} + \epsilon_t
+  \]
+- **MA (Moving Average Model):**
+  \[
+  R_t = u + \theta \epsilon_{t-1} + \epsilon_t
+  \]
+- **ARMA (Combining AR and MA):**
+  \[
+  R_t = u + \beta R_{t-1} + \theta \epsilon_{t-1} + \epsilon_t
+  \]
 
-### 11) ARIMA Model (Does Not Require Stability)
-- **ARIMA (p, d, q) extends ARMA** by introducing differencing:
-  - \( p \): Number of autoregressive terms (AR)
-  - \( d \): Differencing order (to make data stationary)
-  - \( q \): Number of moving average terms (MA)
+#### ARIMA Model (Handles Non-Stationary Data)
+- Introduces **Differencing (d)** to transform unstable data into stable data.
+- Parameters:
+  - **p**: Number of autoregressive terms.
+  - **d**: Differencing order.
+  - **q**: Number of moving average terms.
 
-### 12) Model Selection
-- Choose \( p, q \) by examining **ACF** and **PACF**:
-  - If **PACF cuts off** after lag \( p \), choose \( p \).
-  - If **ACF cuts off** after lag \( q \), choose \( q \).
+### Model Selection
+1. Use **ACF and PACF** to determine parameters.
+   - If PACF cuts off after p, choose p.
+   - If ACF cuts off after q, choose q.
+2. **Cross-Validation** for model performance.
+3. **Error Metrics:**
+   - AIC (Akaike Information Criterion) favors complex models.
+   - BIC (Bayesian Information Criterion) favors simple models.
+   - Compare AIC and BIC to find an optimal balance.
 
-### 13) How to Train and Validate Models
-- **Data Splitting**:
-  - Train the model on training data.
-  - Test on validation data (if unavailable, use **cross-validation**).
-- **Cross-validation methods**:
-  1. **K-Fold Validation**: Split data into \( K \) parts, rotating test and training sets.
-  2. **Bootstrap**: Sample with replacement to create multiple training sets.
-- **Model Selection Based on Error Metrics**:
-  - **AIC (Akaike Information Criterion)** favors complex models.
-  - **BIC (Bayesian Information Criterion)** favors simpler models.
-  - Compare AIC and BIC curves to find an optimal model.
-
-### 14) Traditional vs. Machine Learning Methods
-- **ARMA & ARIMA** require assumptions:
-  - Stationarity (or differencing to achieve it).
-  - Future values depend linearly on past values.
-- **Machine Learning (XGBoost, Random Forest, LSTM)**:
-  - No stationarity assumptions.
-  - Requires feature engineering (e.g., lag features, rolling windows).
-  - Harder to interpret than ARIMA but can model complex structures.
+### Machine Learning for Time Series
+- ARIMA relies on statistical assumptions.
+- Machine Learning methods (XGBoost, Random Forest, LSTM):
+  - No stationarity requirement.
+  - Requires feature engineering.
+  - Harder to interpret than ARIMA but captures complex patterns.
